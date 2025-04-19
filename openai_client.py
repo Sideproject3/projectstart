@@ -86,6 +86,8 @@ Remember: Your value is in precisely connecting violations to specific guideline
 # USER_PROMPT = "describe what you see in the image, be very detailed and describe things clearly and precisely"
 USER_PROMPT = "usinge the guidelines which are provided  as a pdf does the image provided violate any of the guidelines"
 
+
+# ! change code such that json structured output is followed https://platform.openai.com/docs/guides/structured-outputs?api-mode=responses
 response = client.responses.create(
 	model="gpt-4.1",
 	input=[
