@@ -1,0 +1,25 @@
+{
+  "Brand Guidelines Violations": [
+    {
+      "VIOLATION CATEGORY": "Logo Wordmark Usage",
+      "REFERENCE": "Page 13, BASICS - 'Tik' and 'Tok'",
+      "GUIDELINE": "Do not separate “Tik” and “Tok”. Please do not modify, break up or misuse the TikTok name nor wordmark in any way.",
+      "ISSUE": "The wordmark is separated into 'TIK' and 'TOK' instead of being the combined 'TikTok'.",
+      "FIX": "Use the full wordmark 'TikTok' without breaking it into parts."
+    },
+    {
+      "VIOLATION CATEGORY": "Logo Wordmark Typography",
+      "REFERENCE": "Page 1 and Page 2, Logo Overview and Types of Logos",
+      "GUIDELINE": "The wordmark uses a specific font and structure to maintain brand consistency and recognition.",
+      "ISSUE": "The text in the image uses an incorrect font style that is not consistent with the official TikTok wordmark typography.",
+      "FIX": "Use the official TikTok wordmark typography without altering the font style."
+    },
+    {
+      "VIOLATION CATEGORY": "Logo Clear Space and Placement",
+      "REFERENCE": "Page 10 and 11, Logo Placement and Clear Space",
+      "GUIDELINE": "Ensure the logo has clear space equal to the full width of the icon on all sides, avoiding text or graphics within this space.",
+      "ISSUE": "The wordmark and icon are positioned close together with no clear margin.",
+      "FIX": "Maintain the clear space around the logo as per guidelines, ensuring no overlapping or tight spacing."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+```json
+{
+  "Brand Guidelines Violations": [
+    {
+      "VIOLATION CATEGORY": "Wordmark Modification",
+      "REFERENCE": "Page 13",
+      "GUIDELINE": "Do not separate “Tik” and “Tok.”",
+      "ISSUE": "The wordmark is shown as 'TIK TOK' instead of 'TikTok.'",
+      "FIX": "Use the correct wordmark 'TikTok' without separation."
+    },
+    {
+      "VIOLATION CATEGORY": "Background Usage",
+      "REFERENCE": "Page 12",
+      "GUIDELINE": "No busy backgrounds.",
+      "ISSUE": "Logo is placed against a busy rainbow gradient background.",
+      "FIX": "Use a plain or less busy background to maintain focus on the logo."
+    },
+    {
+      "VIOLATION CATEGORY": "Logo Version",
+      "REFERENCE": "Page 4",
+      "GUIDELINE": "Use black version on white backgrounds or white version on darker color backgrounds or imagery.",
+      "ISSUE": "The background and logo shading do not comply with guidelines for background use.",
+      "FIX": "Use the logo version specified for the background color used."
+    }
+  ]
+}
+```

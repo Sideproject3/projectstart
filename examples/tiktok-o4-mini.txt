@@ -1,0 +1,23 @@
+{"Brand Guidelines Violations":[
+  {
+    "VIOLATION CATEGORY":"Wordmark separation",
+    "REFERENCE":"Page 13, “TIK” and “TOK” section",
+    "GUIDELINE":"“Do not separate “Tik” and “Tok””",
+    "ISSUE":"The design renders the name as “TIK TOK” (two words)",
+    "FIX":"Use the official wordmark as a single entity: “TikTok”"
+  },
+  {
+    "VIOLATION CATEGORY":"Wordmark case and font change",
+    "REFERENCE":"Page 13, Do’s and Don’ts table (“No font change”); Visual examples on Page 3",
+    "GUIDELINE":"“No font change” – use only the supplied TikTok wordmark in its approved typeface and casing",
+    "ISSUE":"The text is rendered in a custom all‑uppercase font instead of the official wordmark",
+    "FIX":"Apply the provided TikTok wordmark asset with correct brand typeface and mixed‑case styling"
+  },
+  {
+    "VIOLATION CATEGORY":"Background misuse",
+    "REFERENCE":"Page 13, Do’s and Don’ts table (“No busy backgrounds”)",
+    "GUIDELINE":"“No busy backgrounds” – ensure sufficient contrast and clear space around the logo",
+    "ISSUE":"The logo and wordmark are placed over a detailed, multi‑colored equalizer graphic",
+    "FIX":"Place the logo on a solid or simple background with at least the required clear space"
+  }
+]}

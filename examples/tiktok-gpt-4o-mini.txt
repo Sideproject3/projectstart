@@ -1,0 +1,27 @@
+```json
+{
+  "Brand Guidelines Violations": [
+    {
+      "LOGO USAGE": "The logo is incorrectly spaced from the primary wordmark 'TIK TOK'.",
+      "REFERENCE": "Page 10, Section: Clear Space",
+      "GUIDELINE": "Clear space should be full width of the icon on all sides for best legibility and impact.",
+      "ISSUE": "The logo is too close to the text, lacking sufficient clear space.",
+      "FIX": "Increase the clear space between the logo and the word 'TIK TOK' to ensure it meets the specified guidelines."
+    },
+    {
+      "WORDMARK USAGE": "The wordmark 'TIK TOK' is improperly spaced.",
+      "REFERENCE": "Page 13, Section: 'Do's and Don'ts'",
+      "GUIDELINE": "Do not separate 'Tik' and 'Tok'.",
+      "ISSUE": "The wordmark is styled as 'TIK TOK', which creates a separation of 'Tik' and 'Tok'.",
+      "FIX": "Use 'TikTok' as a single word without separation."
+    },
+    {
+      "BACKGROUND USAGE": "The background is busy and detracts from the logo.",
+      "REFERENCE": "Page 12, 'Do's and Don'ts'",
+      "GUIDELINE": "No busy backgrounds.",
+      "ISSUE": "The colorful sound wave background creates a busy visual that conflicts with the logo.",
+      "FIX": "Use a simpler background that allows the logo to stand out."
+    }
+  ]
+}
+```

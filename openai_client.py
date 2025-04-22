@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser(prog="Open api image client")
 
 parser.add_argument("-i", "--image", required=True, help="path to input image file")
 parser.add_argument("-g", "--guidelines", required=False, help="path to input guidelines pdf file file")
-parser.add_argument("-m", "--model", required=True, type=str, choices=["gpt-4.1"], help="path to input guidelines pdf file file")
+parser.add_argument("-m", "--model", required=True, type=str, choices=["gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano", "o4-mini", "gpt-4o", "gpt-4o-mini"], help="path to input guidelines pdf file file")
 args = vars(parser.parse_args())
 
 # loading .env file 

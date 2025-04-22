@@ -1,0 +1,32 @@
+{
+  "Brand Guidelines Violations": [
+    {
+      "VIOLATION CATEGORY": "Wordmark Usage",
+      "REFERENCE": "Page 13, 'Do not separate “Tik” and “Tok”'",
+      "GUIDELINE": "Do not separate “Tik” and “Tok”. Please do not modify, break up or misuse the TikTok name nor wordmark in any way.",
+      "ISSUE": "The design displays the wordmark as 'TIK TOK' with a space, instead of the required 'TikTok' without a space.",
+      "FIX": "Use the correct, unbroken wordmark: 'TikTok'."
+    },
+    {
+      "VIOLATION CATEGORY": "Logo on Busy Backgrounds",
+      "REFERENCE": "Page 12, 'No busy backgrounds'",
+      "GUIDELINE": "No busy backgrounds.",
+      "ISSUE": "The logo and wordmark are displayed over a very busy, colorful equalizer background that reduces legibility and violates the clear background rule.",
+      "FIX": "Place the logo and wordmark on a plain or solid background, as shown in guideline examples."
+    },
+    {
+      "VIOLATION CATEGORY": "Logo Clear Space",
+      "REFERENCE": "Page 11, 'Clear space should be full width of the icon on all sides for best legibility and impact. Avoid putting any text or graphics within the clear space.'",
+      "GUIDELINE": "Clear space should be full width of the icon on all sides for best legibility and impact.",
+      "ISSUE": "The design does not maintain the required clear space around the logo, with the busy background imagery encroaching into the logo area.",
+      "FIX": "Ensure there is a clear space around the logo equal to the width of the icon on all sides, free from any text or graphic elements."
+    },
+    {
+      "VIOLATION CATEGORY": "Wordmark Font and Style",
+      "REFERENCE": "Page 12, 'No font change', 'No breaking of TikTok'",
+      "GUIDELINE": "No font change. No breaking of TikTok.",
+      "ISSUE": "The wordmark appears in a standard sans-serif font and all uppercase, which is not the official font or case of the TikTok wordmark, and it is further broken into two words.",
+      "FIX": "Use the official TikTok wordmark with its proprietary letterforms, correct casing, and no alterations."
+    }
+  ]
+}
