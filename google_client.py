@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser(prog="Open api image client")
 
 parser.add_argument("-i", "--image", required=True, help="path to input image file")
 parser.add_argument("-g", "--guidelines", required=False, help="path to input guidelines pdf file file")
-parser.add_argument("-m", "--model", required=True, type=str, choices=["gem	ini-2.5-flash-preview-04-17", "gemini-2.0-flash", "gemini-2.5-pro-preview-03-25", "gemini-2.5-pro-exp-03-25", "gemini-1.5-flash"], help="path to input guidelines pdf file file")
+parser.add_argument("-m", "--model", required=True, type=str, choices=["gemini-2.5-flash-preview-04-17", "gemini-2.0-flash", "gemini-2.5-pro-preview-03-25", "gemini-2.5-pro-exp-03-25", "gemini-1.5-flash"], help="path to input guidelines pdf file file")
 args = vars(parser.parse_args())
 
 # loading .env file 
