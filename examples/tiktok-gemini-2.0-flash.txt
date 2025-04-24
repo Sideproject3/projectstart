@@ -1,0 +1,20 @@
+```json
+{
+  "Brand Guidelines Violations": [
+    {
+      "VIOLATION CATEGORY": "Logo Usage",
+      "REFERENCE": "Page 12",
+      "GUIDELINE": "Please do not modify, break up or misuse the TikTok name nor wordmark in any way.",
+      "ISSUE": "The logo is placed on a busy background.",
+      "FIX": "Use the logo on a plain background to ensure visibility and avoid visual clutter, adhering to the guidelines prohibiting busy backgrounds."
+    },
+    {
+      "VIOLATION CATEGORY": "Logo Usage",
+      "REFERENCE": "Page 12",
+      "GUIDELINE": "No shadow or glow",
+      "ISSUE": "The logo has a shadow.",
+      "FIX": "Remove the shadow from the logo."
+    }
+  ]
+}
+```

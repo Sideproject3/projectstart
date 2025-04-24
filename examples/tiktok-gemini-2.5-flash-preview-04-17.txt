@@ -1,0 +1,14 @@
+```json
+{
+  "Brand Guidelines Violations": [
+    {
+      "VIOLATION CATEGORY": "Logo Usage",
+      "Brief description of the specific violation": "The logo is placed on a busy, patterned background.",
+      "REFERENCE": "Page 12",
+      "GUIDELINE": "No busy backgrounds",
+      "ISSUE": "The provided design uses a graphic equalizer pattern with multiple bright, changing colors as the background for the TikTok logo (icon and wordmark).",
+      "FIX": "Replace the background with an approved solid color (black, white, darker color, or lighter color as appropriate for the specific logo version used) or simple imagery that does not create a busy visual behind the logo, in accordance with guidelines on pages 3-8."
+    }
+  ]
+}
+```

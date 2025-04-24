@@ -1,0 +1,42 @@
+```json
+{
+  "Brand Guidelines Violations": [
+    {
+      "VIOLATION CATEGORY": "Logo Usage - Color",
+      "REFERENCE": "Page 4",
+      "GUIDELINE": "Primary logo (simplified): Use white version on darker color backgrounds or imagery.",
+      "ISSUE": "The logo uses a white icon on a multicolored background which is not a 'darker color' as specified in the guidelines.",
+      "FIX": "Use the white version of the simplified logo on a darker background or consider using a different background altogether."
+    },
+    {
+      "VIOLATION CATEGORY": "Logo Usage - Clear Space",
+      "REFERENCE": "Page 10",
+      "GUIDELINE": "To maximize visibility and impact, ensure our logo has clear space for it to breathe.",
+      "ISSUE": "The logo is too close to the rainbow background elements, not providing enough 'clear space'.",
+      "FIX": "Increase the space around the logo to meet the guideline's requirement of clear space for optimal visibility."
+    },
+    {
+      "VIOLATION CATEGORY": "Logo Usage - Minimum Size",
+      "REFERENCE": "Page 11",
+      "GUIDELINE": "Minimum size for our logo is 3mm print and 16 pixels digital.",
+      "ISSUE": "The provided image does not specify dimensions, so it is impossible to determine if the minimum size requirements are met.",
+      "FIX": "Provide logo dimensions to ensure the minimum size requirement is met, as specified in the guidelines."
+    },
+    {
+      "VIOLATION CATEGORY": "Logo Usage - Sizing and Placement",
+      "REFERENCE": "Page 9",
+      "GUIDELINE": "Use the format width (W) to work out the size of the logo.  Primary logo: Portrait = 40%W, Square = 25%W, Horizontal = 15%W",
+      "ISSUE": "The provided image does not state the size of the logo, nor is it clear from the visual representation if it's compliant with specified sizing proportions.",
+      "FIX": "Ensure the logo size adheres to the specified proportions (40%W portrait, 25%W square, or 15%W horizontal) relative to the format width."
+    },
+    {
+      "VIOLATION CATEGORY": "Ungoverned Element",
+      "REFERENCE": "N/A",
+      "GUIDELINE": "N/A",
+      "ISSUE": "The rainbow background is not addressed in the provided brand guidelines, making it impossible to determine its compliance.",
+      "FIX": "Consult the brand guidelines for specifications on acceptable background elements. Add background guidelines to the PDF, if appropriate."
+    }
+  ]
+}
+```
+

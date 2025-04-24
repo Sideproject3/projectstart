@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser(prog="Open api image client")
 
 parser.add_argument("-i", "--image", required=True, help="path to input image file")
 parser.add_argument("-g", "--guidelines", required=False, help="path to input guidelines pdf file file")
-# parser.add_argument("-m", "--model", required=True, type=str, choices=["gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano", "o4-mini", "gpt-4o", "gpt-4o-mini"], help="path to input guidelines pdf file file")
+parser.add_argument("-m", "--model", required=True, type=str, choices=["gem	ini-2.5-flash-preview-04-17", "gemini-2.0-flash", "gemini-2.5-pro-preview-03-25", "gemini-2.5-pro-exp-03-25", "gemini-1.5-flash"], help="path to input guidelines pdf file file")
 args = vars(parser.parse_args())
 
 # loading .env file 
@@ -28,7 +28,7 @@ pdf_filepath = pathlib.Path(args["guidelines"])
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 response = client.models.generate_content(
-	model="gemini-2.0-flash",
+	model=args["model"],
 	config=types.GenerateContentConfig(
 		system_instruction=SYSTEM_MESSAGE
 	),

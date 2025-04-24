@@ -1,0 +1,20 @@
+```json
+{
+  "Brand Guidelines Violations": [
+    {
+      "VIOLATION CATEGORY": "Logo Usage - Background",
+      "REFERENCE": "Page 12",
+      "GUIDELINE": "Logo Don'ts - Visual example explicitly states 'No busy backgrounds'.",
+      "ISSUE": "The submitted image places the TikTok logo over a complex, multi-colored, and visually busy graphic equalizer pattern, which hinders logo legibility and impact.",
+      "FIX": "Place the logo on a solid color background (e.g., black as shown on page 7 for the white tertiary logo) or simple, non-distracting imagery compliant with the guidelines."
+    },
+    {
+      "VIOLATION CATEGORY": "Logo Usage - Incorrect Logo Type",
+      "REFERENCE": "Page 7",
+      "GUIDELINE": "Our stacked lockup should only be used if our primary and secondary logos are inappropriate for specific applications due to size, format or design restrictions. If using the stacked logo, ensure the design contains minimal elements as the logo takes up more space.",
+      "ISSUE": "The tertiary (stacked) logo is used on a design with a visually complex (busy) background, which does not constitute 'minimal elements'. The justification for using the tertiary logo over the primary or secondary due to size/format restrictions is not evident from the image alone.",
+      "FIX": "Unless specific size or format restrictions necessitate the tertiary logo, use the primary (horizontal) logo. If the tertiary logo is required, ensure it is placed within a design with minimal competing visual elements, following the background rules specified on pages 7 & 8."
+    }
+  ]
+}
+```
