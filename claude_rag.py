@@ -1,22 +1,20 @@
 #!/usr/bin/env python3
-# !/usr/bin/env python3
 # Requirements: pip install langchain langchain-community langchain-huggingface sentence-transformers faiss-cpu pypdf
 from anthropic import Anthropic
 from dotenv import load_dotenv
 import os
 import argparse
 import base64
-import tempfile
-import uuid
+import time
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
-import time
 
 # Set environment variable to avoid parallelism warnings with tokenizers
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
+# Import your existing prompts
 from prompts import SYSTEM_MESSAGE, USER_PROMPT
 
 
@@ -56,16 +54,20 @@ def encode_file(file_path):
     return encoded_file, media_type
 
 
-def create_vector_store(pdf_path):
+def process_pdf_for_rag(pdf_path, query=None):
     """
-    Creates a vector store from a PDF file.
+    Process a PDF file for RAG by splitting into chunks and creating embeddings.
 
     Args:
         pdf_path (str): Path to the PDF file
+        query (str): The query to search for (defaults to USER_PROMPT)
 
     Returns:
-        vectorstore: The vector store with the embedded PDF chunks
+        tuple: (vectorstore, contexts) - the FAISS vectorstore and relevant contexts
     """
+    if query is None:
+        query = USER_PROMPT
+
     print("Loading PDF...")
     # Load the PDF
     loader = PyPDFLoader(pdf_path)
@@ -73,10 +75,10 @@ def create_vector_store(pdf_path):
 
     print(f"PDF loaded with {len(documents)} pages.")
 
-    # Split the document into chunks
+    # Use smaller chunks with more overlap for better context retention
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=200,
+        chunk_size=800,  # Smaller chunks
+        chunk_overlap=300,  # More overlap to maintain context
         length_function=len,
     )
     chunks = text_splitter.split_documents(documents)
@@ -100,22 +102,8 @@ def create_vector_store(pdf_path):
 
     print(f"Vector store created in {end_time - start_time:.2f} seconds.")
 
-    return vectorstore
-
-
-def retrieve_relevant_context(vectorstore, query, k=5):
-    """
-    Retrieves the most relevant context for a given query.
-
-    Args:
-        vectorstore: The vector store to search in
-        query (str): The query to search for
-        k (int): Number of chunks to retrieve
-
-    Returns:
-        str: The concatenated relevant text chunks
-    """
-    # Search for similar chunks
+    # Retrieve more chunks to get better context
+    k = 8  # Increased from 5
     print(f"Searching for documents relevant to the query: '{query[:50]}...'")
     start_time = time.time()
     similar_docs = vectorstore.similarity_search(query, k=k)
@@ -123,8 +111,14 @@ def retrieve_relevant_context(vectorstore, query, k=5):
 
     print(f"Found {len(similar_docs)} relevant chunks in {end_time - start_time:.2f} seconds.")
 
-    # Concatenate the chunks into a single context string
-    context = "\n\n".join([doc.page_content for doc in similar_docs])
+    # Display the first few words of each chunk for debugging
+    for i, doc in enumerate(similar_docs):
+        preview = doc.page_content[:50].replace('\n', ' ').strip()
+        print(f"Chunk {i + 1}: {preview}...")
+
+    # Concatenate the chunks into a single context string with clear separators
+    context_sections = [f"[SECTION {i + 1}]\n{doc.page_content}" for i, doc in enumerate(similar_docs)]
+    context = "\n\n".join(context_sections)
 
     return context
 
@@ -138,9 +132,10 @@ def main():
                         choices=["claude-3-opus-20240229", "claude-3-sonnet-20240229", "claude-3-haiku-20240307",
                                  "claude-3-5-sonnet-20240620", "claude-3-7-sonnet-20250219"],
                         help="Claude model to use")
+    parser.add_argument("-q", "--query", required=False, help="Optional custom query for RAG (defaults to USER_PROMPT)")
     args = vars(parser.parse_args())
 
-    # loading .env file
+    # Loading .env file
     load_dotenv()
 
     if not os.environ.get("ANTHROPIC_API_KEY"):
@@ -148,19 +143,11 @@ def main():
             "Warning: ANTHROPIC_API_KEY environment variable not found. Please add it to your .env file or export it.")
         return
 
-    # Create vector store from the PDF (using guidelines as the PDF for RAG)
-    vectorstore = create_vector_store(args["guidelines"])
+    # Use custom query if provided, otherwise use default USER_PROMPT
+    query = args.get("query", USER_PROMPT)
 
-    # Retrieve relevant context based on the USER_PROMPT
-    relevant_context = retrieve_relevant_context(vectorstore, USER_PROMPT)
-
-    # Create vector store from the PDF (using guidelines as the PDF for RAG)
-    print("Creating vector store from PDF...")
-    vectorstore = create_vector_store(args["guidelines"])
-
-    # Retrieve relevant context based on the USER_PROMPT
-    print("Retrieving relevant context...")
-    relevant_context = retrieve_relevant_context(vectorstore, USER_PROMPT)
+    # Process the PDF and get relevant contexts
+    relevant_context = process_pdf_for_rag(args["guidelines"], query)
 
     # Encode PDF/guidelines
     base64_guidelines, guidelines_media_type = encode_file(args["guidelines"])
@@ -183,7 +170,9 @@ def main():
 
     {relevant_context}
 
-    Please answer based on both the image and the provided context from the document.
+    Please analyze the image in relation to the IKEA brand guidelines provided in these sections.
+    Identify any violations of the guidelines in the image and provide specific references to the relevant guideline sections.
+    Structure your response as a JSON object listing each violation, the guideline reference, and suggested fixes.
     """
 
     # Prepare messages
@@ -235,10 +224,6 @@ def main():
         print(response.content[0].text)
     except Exception as e:
         print(f"Error: {e}")
-
-    # Cleanup the vector database
-    import shutil
-    shutil.rmtree(vectorstore._persist_directory, ignore_errors=True)
 
 
 if __name__ == "__main__":
