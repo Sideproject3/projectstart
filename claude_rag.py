@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# !/usr/bin/env python3
+# Requirements: pip install langchain langchain-community langchain-huggingface sentence-transformers faiss-cpu pypdf
 from anthropic import Anthropic
 from dotenv import load_dotenv
 import os
@@ -9,8 +11,11 @@ import uuid
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 import time
+
+# Set environment variable to avoid parallelism warnings with tokenizers
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 from prompts import SYSTEM_MESSAGE, USER_PROMPT
 
@@ -53,7 +58,7 @@ def encode_file(file_path):
 
 def create_vector_store(pdf_path):
     """
-    Creates a vector store from a PDF file using FAISS with HuggingFace embeddings.
+    Creates a vector store from a PDF file.
 
     Args:
         pdf_path (str): Path to the PDF file
@@ -125,7 +130,7 @@ def retrieve_relevant_context(vectorstore, query, k=5):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="Claude API RAG client with FAISS")
+    parser = argparse.ArgumentParser(prog="Claude API RAG client")
 
     parser.add_argument("-i", "--image", required=False, help="path to input image file")
     parser.add_argument("-g", "--guidelines", required=True, help="path to input PDF file for RAG")
@@ -147,6 +152,14 @@ def main():
     vectorstore = create_vector_store(args["guidelines"])
 
     # Retrieve relevant context based on the USER_PROMPT
+    relevant_context = retrieve_relevant_context(vectorstore, USER_PROMPT)
+
+    # Create vector store from the PDF (using guidelines as the PDF for RAG)
+    print("Creating vector store from PDF...")
+    vectorstore = create_vector_store(args["guidelines"])
+
+    # Retrieve relevant context based on the USER_PROMPT
+    print("Retrieving relevant context...")
     relevant_context = retrieve_relevant_context(vectorstore, USER_PROMPT)
 
     # Encode PDF/guidelines
@@ -222,6 +235,10 @@ def main():
         print(response.content[0].text)
     except Exception as e:
         print(f"Error: {e}")
+
+    # Cleanup the vector database
+    import shutil
+    shutil.rmtree(vectorstore._persist_directory, ignore_errors=True)
 
 
 if __name__ == "__main__":
