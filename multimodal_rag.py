@@ -14,11 +14,13 @@ from llama_index.llms.openai import OpenAI as LlamaOpenAI
 from llama_index.core import Settings, Document, VectorStoreIndex
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.multi_modal_llms.openai import OpenAIMultiModal
-from llama_index.core.schema import ImageNode, TextNode
+from llama_index.core.schema import ImageNode, TextNode, ImageDocument
 from llama_index.core import StorageContext
 from llama_index.vector_stores.qdrant import QdrantVectorStore
 from llama_index.core import PromptTemplate
 from llama_index.core.response import Response
+from llama_index.multi_modal_llms.openai import OpenAIMultiModal
+from llama_index.core.query_engine import SimpleMultiModalQueryEngine
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Multimodal RAG using LlamaIndex and OpenAI GPT-4.1")
@@ -106,9 +108,10 @@ def create_nodes_from_pdf(pdf_path: str, save_images: bool = False, images_dir: 
     
     # Extract images
     images = extract_images_from_pdf(pdf_path, save_images, images_dir)
-    for img_path, _ in images:
+    for img_path, img_bytes in images:
         image_node = ImageNode(
             image_path=img_path,
+            image_data=img_bytes,
             metadata={"source": pdf_path, "content_type": "image"}
         )
         nodes.append(image_node)
@@ -136,28 +139,82 @@ def build_index(nodes: List[Any]):
     index = VectorStoreIndex(nodes)
     return index
 
-def query_index(index, query: str, llm):
+def query_multimodal_index(index, query: str, multi_modal_llm):
+    """Query the index using a multimodal approach that can process both text and images."""
+    
     # Create custom prompt template for better results
     qa_tmpl_str = (
         "Context information is below.\n"
         "---------------------\n"
         "{context_str}\n"
         "---------------------\n"
-        "Given the context information and not prior knowledge, "
-        "answer the query.\n"
+        "Given the context information including both text and images, "
+        "please provide a comprehensive answer to the query.\n"
+        "Analyze both the textual content and any images to give a complete response.\n"
         "Query: {query_str}\n"
         "Answer: "
     )
     qa_tmpl = PromptTemplate(qa_tmpl_str)
     
-    # Create query engine with the text LLM (not the multi-modal LLM)
-    query_engine = index.as_query_engine(
-        text_qa_template=qa_tmpl
-    )
+    # Get retrieved nodes including both text and image nodes
+    retriever = index.as_retriever(similarity_top_k=5)
+    retrieved_nodes = retriever.retrieve(query)
     
-    # Query the index
-    response = query_engine.query(query)
-    return response
+    # Extract image nodes and text nodes
+    image_nodes = [node for node in retrieved_nodes if isinstance(node.node, ImageNode)]
+    text_nodes = [node for node in retrieved_nodes if not isinstance(node.node, ImageNode)]
+    
+    # Create context string from text nodes
+    context_str = "\n\n".join([node.node.get_content() for node in text_nodes])
+    
+    print(f"Retrieved {len(text_nodes)} text nodes and {len(image_nodes)} image nodes for query")
+    
+    # If we have images, process them with the multimodal LLM
+    if image_nodes:
+        # Create proper ImageDocument objects for multimodal processing
+        image_documents = []
+        for node in image_nodes:
+            try:
+                image_node = node.node
+                if hasattr(image_node, 'image_path') and os.path.exists(image_node.image_path):
+                    # Create an ImageDocument with the image data
+                    if hasattr(image_node, 'image_data') and image_node.image_data:
+                        # Use stored image data if available
+                        image_documents.append(ImageDocument(image=image_node.image_data))
+                    else:
+                        # Read from file if needed
+                        with open(image_node.image_path, "rb") as f:
+                            image_bytes = f.read()
+                            image_documents.append(ImageDocument(image=image_bytes))
+            except Exception as e:
+                print(f"Error loading image from node: {e}")
+        
+        # Format the prompt with context
+        formatted_prompt = qa_tmpl.format(context_str=context_str, query_str=query)
+        
+        # Use multimodal LLM to get response considering both text and images
+        try:
+            response = multi_modal_llm.complete(
+                prompt=formatted_prompt,
+                image_documents=image_documents
+            )
+            return response
+        except Exception as e:
+            print(f"Error during multimodal processing: {e}")
+            print("Falling back to text-only processing")
+            # Fall back to text-only processing
+            query_engine = index.as_query_engine(
+                text_qa_template=qa_tmpl
+            )
+            response = query_engine.query(query)
+            return response
+    else:
+        # If no images, use regular query engine with text
+        query_engine = index.as_query_engine(
+            text_qa_template=qa_tmpl
+        )
+        response = query_engine.query(query)
+        return response
 
 def run_multimodal_rag():
     # Parse arguments
@@ -184,13 +241,16 @@ def run_multimodal_rag():
     # Build index
     index = build_index(nodes)
     
-    # Query the index using the text LLM
-    response = query_index(index, args.query, llm)
+    # Query the index using the multimodal LLM
+    response = query_multimodal_index(index, args.query, multi_modal_llm)
     
     # Print response
     print("\nQuery:", args.query)
     print("\nResponse:")
-    print(response.response)
+    if hasattr(response, 'response'):
+        print(response.response)
+    else:
+        print(response)
     
     # Clean up temporary files
     for node in nodes:
