@@ -54,5 +54,6 @@ Remember: Your value is in precisely connecting violations to specific guideline
 
 # USER_PROMPT = "describe what you see in the image, be very detailed and describe things clearly and precisely
 # USER_PROMPT = "usinge the guidelines which are provided  as a pdf does the image provided violate any of the guidelines"
-#USER_PROMPT = "use the provided guidelines which are provided as a PDF file and reflect whether the image provided violates any of the guidelines"
-USER_PROMPT = "use the provided guidelines which are provided as a PDF file and reflect whether the image provided violates any of the guidelines focus on page 5 to 18 in the pdf"
+USER_PROMPT = "use the provided guidelines which are provided as a PDF file and reflect whether the image provided violates any of the guidelines"
+# USER_PROMPT = "use the provided guidelines which are provided as a PDF file and reflect whether the image provided violates any of the guidelines focus on page 5 to 18 in the pdf"
+# USER_PROMPT = "use the provided guidelines which is provided as a PDF file and reflect whether the image provided violates the guidelines, focus only guidelines that concern the logo"
