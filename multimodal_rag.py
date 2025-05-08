@@ -1,12 +1,9 @@
 import os
-from typing import List, Dict, Any, Tuple
+from typing import List, Any, Tuple
 import argparse
 from dotenv import load_dotenv
 import tempfile
 import fitz  # PyMuPDF
-from PIL import Image
-import io
-import uuid
 import json
 import hashlib
 from datetime import datetime
@@ -19,13 +16,8 @@ from llama_index.core.node_parser import SentenceSplitter
 from llama_index.multi_modal_llms.openai import OpenAIMultiModal
 from llama_index.core.schema import ImageNode, TextNode, ImageDocument
 from llama_index.core import StorageContext
-from llama_index.vector_stores.qdrant import QdrantVectorStore
 from llama_index.core import PromptTemplate
-from llama_index.core.response import Response
 from llama_index.multi_modal_llms.openai import OpenAIMultiModal
-from llama_index.core.query_engine import SimpleMultiModalQueryEngine
-from llama_index.core.storage.docstore import SimpleDocumentStore
-from llama_index.core.storage.index_store import SimpleIndexStore
 from llama_index.core.storage import StorageContext
 
 def parse_arguments():
